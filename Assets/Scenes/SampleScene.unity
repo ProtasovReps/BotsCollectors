@@ -288,7 +288,7 @@ MonoBehaviour:
   _pool: {fileID: 1957267001}
   _resourceStash: {fileID: 631721336}
   _spawnPointStash: {fileID: 616296141}
-  _spawnDelay: 1
+  _spawnDelay: 3
 --- !u!4 &310651264
 Transform:
   m_ObjectHideFlags: 0
@@ -713,7 +713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _factory: {fileID: 631721338}
-  _unitCount: 3
+  _startUnitCount: 3
 --- !u!114 &631721338
 MonoBehaviour:
   m_ObjectHideFlags: 0
