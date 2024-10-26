@@ -4,45 +4,36 @@ using UnityEngine;
 public class Base : MonoBehaviour
 {
     [SerializeField] private Barrack _barrack;
-    [SerializeField] private ResourcePool _pool;
-
-    private Queue<Resource> _targets;
+    [SerializeField] private Scanner _scanner;
 
     private void OnEnable()
     {
-        _pool.ResourceGot += OnResourceGot;
-        _barrack.UnitGot += OnUnitGot;
+        _scanner.ResourcesFound += OnResourcesFound;
     }
 
     private void OnDisable()
     {
-        _pool.ResourceGot -= OnResourceGot;
-        _barrack.UnitGot -= OnUnitGot;
+        _scanner.ResourcesFound -= OnResourcesFound;
     }
 
     public void Initialize()
     {
         _barrack.Initialize();
-
-        _targets = new Queue<Resource>();
+        _scanner.StartScanDelayed();
     }
 
-    private void OnResourceGot(Resource resourse)
+    private void OnResourcesFound(List<Resource> resources)
     {
-        if (_barrack.TryGetUnit(out Unit unit))
-            unit.SetTargetResource(resourse);
-        else
-            _targets.Enqueue(resourse);
+        foreach (Resource resource in resources)
+            SetUnitTarget(resource);
     }
 
-    private void OnUnitGot()
+    private void SetUnitTarget(Resource resource)
     {
-        if (_targets.Count > 0)
-        {
-            if(_barrack.TryGetUnit(out Unit unit))
-            {
-                unit.SetTargetResource(_targets.Dequeue());
-            }
-        }
+        if (_barrack.TryGetUnit(out Unit unit) == false)
+            return;
+
+        resource.SetBusyState();
+        unit.SetTargetResource(resource);
     }
 }

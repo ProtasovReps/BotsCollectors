@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    [SerializeField] private Transform _takePoint;
-    [SerializeField] private float _speed;
-    [SerializeField] private float _maxResourceDistance;
+    [SerializeField] private UnitMovement _movement;
+    [SerializeField] private UnitCollector _collector;
+    [SerializeField] private DistanceComparer _distanceChecker;
 
     private ResourceStash _stash;
     private Coroutine _coroutine;
-    private Resource _targetResource;
 
     public event Action<Unit> WorkedOut;
 
@@ -21,51 +20,26 @@ public class Unit : MonoBehaviour
 
     public void SetTargetResource(Resource resource)
     {
-        _targetResource = resource;
-        _coroutine = StartCoroutine(Move());
+        _coroutine = StartCoroutine(BringResource(resource));
     }
 
-    private IEnumerator Move()
+    private IEnumerator BringResource(Resource resource)
     {
-        yield return StartCoroutine(FollowTarget(_targetResource.transform));
-
-        TakeResource();
-
-        yield return StartCoroutine(FollowTarget(_stash.transform));
-
-        StashResource();
-    }
-
-    private IEnumerator FollowTarget(Transform target)
-    {
-        Vector3 targetPosition = new Vector3(target.position.x, transform.position.y, target.position.z);
-
-        while (CheckDistance(target.transform))
+        while (_distanceChecker.CompareDistances(resource.transform) == false)
         {
-            transform.forward = targetPosition - transform.position;
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
+            _movement.Move(resource.transform);
             yield return null;
         }
-    }
 
-    private bool CheckDistance(Transform target)
-    {
-        Vector3 offset = new Vector3(target.position.x, transform.position.y, target.position.z) - transform.position;
+        _collector.TakeResource(resource);
 
-        return offset.sqrMagnitude >= _maxResourceDistance;
-    }
+        while (_distanceChecker.ComparePositions(_stash.transform) == false)
+        {
+            _movement.Move(_stash.transform);
+            yield return null;
+        }
 
-    private void TakeResource()
-    {
-        _targetResource.transform.position = _takePoint.position;
-        _targetResource.transform.SetParent(transform);
-    }
-
-    private void StashResource()
-    {
-        _stash.AddResource(_targetResource);
-        _targetResource = null;
-
+        _collector.StashResource(_stash, resource);
         WorkedOut?.Invoke(this);
     }
 }

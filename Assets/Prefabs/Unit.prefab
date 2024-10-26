@@ -44,6 +44,9 @@ GameObject:
   - component: {fileID: 9030744434646975871}
   - component: {fileID: 6468963407031070131}
   - component: {fileID: 3824694318990603032}
+  - component: {fileID: 3004358985842082339}
+  - component: {fileID: 8737745993790660362}
+  - component: {fileID: 3799984908896385526}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Untagged
@@ -153,10 +156,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef973ae99131f7488f8addd7fc9133e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _movement: {fileID: 3004358985842082339}
+  _collector: {fileID: 8737745993790660362}
+  _distanceChecker: {fileID: 3799984908896385526}
+--- !u!114 &3004358985842082339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6649293687120420107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de470de206768f4aa03fa7f5ed8be3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 5
+--- !u!114 &8737745993790660362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6649293687120420107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6a9ca1e8d9f9f45a70c948c5052430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _takePoint: {fileID: 8012422238096580503}
-  _stash: {fileID: 0}
-  _speed: 2
-  _maxResourceDistance: 1
+--- !u!114 &3799984908896385526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6649293687120420107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0bc9c0371939494bb25845907abba2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxSquareDistance: 3
 --- !u!1 &8840952006180658706
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +209,6 @@ GameObject:
   - component: {fileID: 717298794525577761}
   - component: {fileID: 8447157357357324327}
   - component: {fileID: 2637030528273207715}
-  - component: {fileID: 2030840554419273851}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -241,24 +281,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2030840554419273851
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8840952006180658706}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}

@@ -8,15 +8,15 @@ public class ResourceView : MonoBehaviour
 
     private void OnEnable()
     {
-        _stash.AmountChanged += OnAmountChanged;
+        _stash.ResourceAdded += resource => OnResourceAdded();
     }
 
     private void OnDisable()
     {
-        _stash.AmountChanged -= OnAmountChanged;
+        _stash.ResourceAdded -= resource => OnResourceAdded();
     }
 
-    private void OnAmountChanged()
+    private void OnResourceAdded()
     {
         _text.text = _stash.ResourceCount.ToString();
     }
