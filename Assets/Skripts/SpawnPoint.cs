@@ -1,25 +1,20 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
 public class SpawnPoint : MonoBehaviour
 {
-    public bool IsFree { get; private set; }
+    private Resource _resource;
 
-    private void Start()
+    public bool IsFree => _resource == null;
+
+    public void AddResource(Resource resource)
     {
-        GetComponent<Collider>().isTrigger = true;
-        IsFree = true;
+        _resource = resource;
+        _resource.PickedUp += OnPickedUp;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnPickedUp()
     {
-        if (other.TryGetComponent<Resource>(out _))
-            IsFree = false;
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent<Resource>(out _))
-            IsFree = true;
+        _resource.PickedUp -= OnPickedUp;
+        _resource = null;
     }
 }

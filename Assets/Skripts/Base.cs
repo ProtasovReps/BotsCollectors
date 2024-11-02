@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,11 @@ public class Base : MonoBehaviour
 {
     [SerializeField] private Barrack _barrack;
     [SerializeField] private Scanner _scanner;
+    [SerializeField] private ResourceStash _stash;
+
+    public event Action<List<Resource>, Base> ResourcesFound;
+
+    public IResourceStash Stash => _stash;
 
     private void OnEnable()
     {
@@ -22,18 +28,17 @@ public class Base : MonoBehaviour
         _scanner.StartScanDelayed();
     }
 
-    private void OnResourcesFound(List<Resource> resources)
-    {
-        foreach (Resource resource in resources)
-            SetUnitTarget(resource);
-    }
-
-    private void SetUnitTarget(Resource resource)
+    public bool TrySetTarget(Resource resource)
     {
         if (_barrack.TryGetUnit(out Unit unit) == false)
-            return;
+            return false;
 
-        resource.SetBusyState();
         unit.SetTargetResource(resource);
+        return true;
+    }
+
+    private void OnResourcesFound(List<Resource> resources)
+    {
+        ResourcesFound?.Invoke(resources, this);
     }
 }

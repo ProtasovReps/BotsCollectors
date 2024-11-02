@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Scanner : MonoBehaviour
 {
+    [SerializeField] private LayerMask _layerMask;
     [SerializeField] private float _scanRadius;
     [SerializeField, Min(0.5f)] private float _scanDelay;
 
@@ -31,7 +32,7 @@ public class Scanner : MonoBehaviour
 
     private void Scan()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _scanRadius, CustomLayerMasks.Resource);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _scanRadius, _layerMask);
 
         if (colliders.Length > 0)
         {
@@ -41,10 +42,7 @@ public class Scanner : MonoBehaviour
             {
                 if (collider.TryGetComponent(out Resource resource))
                 {
-                    if (resource.IsFree == true)
-                    {
-                        resources.Add(resource);
-                    }
+                    resources.Add(resource);
                 }
             }
 

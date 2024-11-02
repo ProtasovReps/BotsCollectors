@@ -1,17 +1,25 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    [SerializeField] private UnitMovement _movement;
+    [SerializeField] private UnitMover _mover;
     [SerializeField] private UnitCollector _collector;
-    [SerializeField] private DistanceComparer _distanceChecker;
 
     private ResourceStash _stash;
     private Coroutine _coroutine;
 
     public event Action<Unit> WorkedOut;
+
+    private void OnEnable()
+    {
+        _mover.Reached += OnReached;
+    }
+
+    private void OnDisable()
+    {
+        _mover.Reached -= OnReached;
+    }
 
     public void Initialize(ResourceStash resourceStash)
     {
@@ -20,26 +28,21 @@ public class Unit : MonoBehaviour
 
     public void SetTargetResource(Resource resource)
     {
-        _coroutine = StartCoroutine(BringResource(resource));
+        _mover.Move(resource);
     }
 
-    private IEnumerator BringResource(Resource resource)
+    private void OnReached(IUnitTarget target)
     {
-        while (_distanceChecker.CompareDistances(resource.transform) == false)
+        if(target is Resource)
         {
-            _movement.Move(resource.transform);
-            yield return null;
+            _collector.TakeResource(target as Resource);
+            _mover.Move(_stash);
         }
 
-        _collector.TakeResource(resource);
-
-        while (_distanceChecker.ComparePositions(_stash.transform) == false)
+        if(target is ResourceStash)
         {
-            _movement.Move(_stash.transform);
-            yield return null;
+            _collector.StashResource(_stash);
+            WorkedOut?.Invoke(this);
         }
-
-        _collector.StashResource(_stash, resource);
-        WorkedOut?.Invoke(this);
     }
 }

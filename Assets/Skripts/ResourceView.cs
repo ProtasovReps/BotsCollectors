@@ -8,12 +8,12 @@ public class ResourceView : MonoBehaviour
 
     private void OnEnable()
     {
-        _stash.ResourceAdded += resource => OnResourceAdded();
+        _stash.Stashed += resource => OnResourceAdded();
     }
 
     private void OnDisable()
     {
-        _stash.ResourceAdded -= resource => OnResourceAdded();
+        _stash.Stashed -= resource => OnResourceAdded();
     }
 
     private void OnResourceAdded()

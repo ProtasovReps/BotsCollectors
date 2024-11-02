@@ -12,12 +12,12 @@ public class ResourceSpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        _resourceStash.ResourceAdded += OnResourceAdded;   
+        _resourceStash.Stashed += OnResourceAdded;   
     }
 
     private void OnDisable()
     {
-        _resourceStash.ResourceAdded -= OnResourceAdded;
+        _resourceStash.Stashed -= OnResourceAdded;
     }
 
     public void Initialize()
@@ -36,6 +36,7 @@ public class ResourceSpawner : MonoBehaviour
             {
                 Resource resource = _pool.Get();
 
+                spawnPoint.AddResource(resource);
                 resource.transform.position = spawnPoint.transform.position;
             }
 
@@ -46,6 +47,5 @@ public class ResourceSpawner : MonoBehaviour
     private void OnResourceAdded(Resource resource)
     {
         _pool.Release(resource);
-        resource.SetFreeState();
     }
 }

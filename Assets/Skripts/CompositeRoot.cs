@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class CompositeRoot : MonoBehaviour
 {
+    [SerializeField] private Base _startBase;
     [SerializeField] private ResourceSpawner _resourceSpawner;
-    [SerializeField] private Base _base;
+    [SerializeField] private BaseControlCenter _controlCenter;
 
     private void Start()
     {
-        _base.Initialize();
+        _controlCenter.Initialize(_startBase);
         _resourceSpawner.Initialize();
     }
 }

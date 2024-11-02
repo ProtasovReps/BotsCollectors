@@ -156,9 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef973ae99131f7488f8addd7fc9133e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movement: {fileID: 3004358985842082339}
+  _mover: {fileID: 3004358985842082339}
   _collector: {fileID: 8737745993790660362}
-  _distanceChecker: {fileID: 3799984908896385526}
 --- !u!114 &3004358985842082339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,7 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de470de206768f4aa03fa7f5ed8be3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
+  _speed: 4
+  _distanceChecker: {fileID: 3799984908896385526}
 --- !u!114 &8737745993790660362
 MonoBehaviour:
   m_ObjectHideFlags: 0

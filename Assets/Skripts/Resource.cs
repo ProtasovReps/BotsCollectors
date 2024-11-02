@@ -1,17 +1,11 @@
+using System;
 using UnityEngine;
 
-[RequireComponent (typeof(Rigidbody))]
-public class Resource : MonoBehaviour 
+public class Resource : MonoBehaviour, IUnitTarget
 {
-    public bool IsFree { get; private set; }
+    public event Action PickedUp;
 
-    private void Awake()
-    {
-        GetComponent<Rigidbody>().isKinematic = true;
-        SetFreeState();
-    }
+    public Transform Transform => transform;
 
-    public void SetBusyState() => IsFree = false;
-
-    public void SetFreeState() => IsFree = true;
+    public void Collect() => PickedUp?.Invoke();
 }
