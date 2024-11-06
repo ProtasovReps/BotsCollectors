@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,29 @@ public class Barrack : MonoBehaviour
 
     private Queue<Unit> _freeUnits;
     private List<Unit> _units;
+
+    public event Action UnitReleased;
+
+    public int FreeUnitsCount => _freeUnits.Count;
+
+    private void OnEnable()
+    {
+        if (_freeUnits != null)
+        {
+            foreach (Unit unit in _freeUnits)
+            {
+                unit.WorkedOut += SaveUnit;
+            }
+        }
+    }
+
+    private void OnDisable()
+    {
+        foreach (Unit unit in _freeUnits)
+        {
+            unit.WorkedOut -= SaveUnit;
+        }
+    }
 
     public void Initialize()
     {
@@ -21,19 +45,10 @@ public class Barrack : MonoBehaviour
     public void SaveUnit(Unit unit)
     {
         _freeUnits.Enqueue(unit);
+        UnitReleased?.Invoke();
     }
 
-    public bool TryGetUnit(out Unit unit)
-    {
-        if (_freeUnits.Count <= 0)
-        {
-            unit = null;
-            return false;
-        }
-
-        unit = _freeUnits.Dequeue();
-        return true;
-    }
+    public Unit GetUnit() => _freeUnits.Dequeue();
 
     private void AddUnit()
     {
@@ -42,5 +57,6 @@ public class Barrack : MonoBehaviour
         newUnit.WorkedOut += SaveUnit;
         _units.Add(newUnit);
         _freeUnits.Enqueue(newUnit);
+        UnitReleased?.Invoke();
     }
 }

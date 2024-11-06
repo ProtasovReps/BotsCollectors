@@ -1,9 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class ResourceSpawner : MonoBehaviour
 {
-    [SerializeField] private ResourcePool _pool;
+    [SerializeField] private Resource _prefab;
+    [SerializeField] private ObjectPool<Resource> _pool;
     [SerializeField] private ResourceStash _resourceStash;
     [SerializeField] private SpawnPointStash _spawnPointStash;
     [SerializeField] private float _spawnDelay;
@@ -22,8 +24,22 @@ public class ResourceSpawner : MonoBehaviour
 
     public void Initialize()
     {
-        _pool.Initialize();
+        CreatePool();
         _coroutine = StartCoroutine(SpawnDelayed());
+    }
+
+    private void OnResourceAdded(Resource resource)
+    {
+        _pool.Release(resource);
+    }
+
+    private void CreatePool()
+    {
+        _pool = new ObjectPool<Resource>(
+           createFunc: () => Instantiate(_prefab),
+           actionOnGet: (resource) => resource.gameObject.SetActive(true),
+           actionOnRelease: (resource) => resource.gameObject.SetActive(false),
+           actionOnDestroy: (resource) => Destroy(resource.gameObject));
     }
 
     private IEnumerator SpawnDelayed()
@@ -42,10 +58,5 @@ public class ResourceSpawner : MonoBehaviour
 
             yield return delay;
         }
-    }
-
-    private void OnResourceAdded(Resource resource)
-    {
-        _pool.Release(resource);
     }
 }

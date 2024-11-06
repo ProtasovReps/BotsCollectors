@@ -18,7 +18,7 @@ public class UnitMover : MonoBehaviour
 
     private IEnumerator FollowTarget(IUnitTarget target)
     {
-        while(_distanceChecker.IsValidDistance(target) == false)
+        while(_distanceChecker.IsCloseEnoughDistance(target.Transform) == false)
         {
             var targetPosition = new Vector3(target.Transform.position.x, transform.position.y, target.Transform.position.z);
 
