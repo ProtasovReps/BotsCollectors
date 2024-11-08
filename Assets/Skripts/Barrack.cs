@@ -16,7 +16,7 @@ public class Barrack : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_freeUnits != null)
+        if (_units != null)
         {
             foreach (Unit unit in _freeUnits)
             {
@@ -27,7 +27,7 @@ public class Barrack : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (Unit unit in _freeUnits)
+        foreach (Unit unit in _units)
         {
             unit.WorkedOut -= SaveUnit;
         }
