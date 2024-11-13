@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba225c49e0b209b4fb40eadf055dec1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startUnitCount: 3
+  _minUnitCount: 1
   _newUnitPrice: 3
 --- !u!114 &66027615487233725
 MonoBehaviour:
@@ -206,7 +206,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _scanRadius: 20
-  _scanDelay: 1
+  _scanDelay: 2
 --- !u!114 &3925452202393700622
 MonoBehaviour:
   m_ObjectHideFlags: 0
