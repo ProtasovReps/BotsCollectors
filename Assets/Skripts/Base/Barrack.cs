@@ -45,7 +45,8 @@ public class Barrack : MonoBehaviour, IUnitAddable
         _freeUnits = new Queue<Unit>();
         _units = new List<Unit>();
 
-        CreateUnit();
+        if (UnitsCount < _minUnitCount)
+            CreateUnit();
     }
 
     public void SaveUnit(Unit unit)
