@@ -44,6 +44,15 @@ public class Base : MonoBehaviour, IFlagSettable
 
     public void RemoveFlag() => _targetFlag = null;
 
+    public void SetStartUnits(int count)
+    {
+        if (_barrack.UnitsCount > 0)
+            return;
+
+        for (int i = 0; i < count; i++)
+            _barrack.CreateUnit();
+    }
+
     private void SetUnitTarget()
     {
         if (_barrack.FreeUnitsCount == 0)

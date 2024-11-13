@@ -6,6 +6,7 @@ public class CompositeRoot : MonoBehaviour
     [SerializeField] private ResourceSpawner _resourceSpawner;
     [SerializeField] private FlagSetter _flagPointSetter;
     [SerializeField] private BuildControlCenter _buildControlCenter;
+    [SerializeField] private int _startBaseUnitCount = 3;
 
     private MouseReader _mouseReader;
 
@@ -18,6 +19,8 @@ public class CompositeRoot : MonoBehaviour
         _flagPointSetter.Initialize(_mouseReader);
 
         Base startBase = _baseFactory.Produce();
+
+        startBase.SetStartUnits(_startBaseUnitCount);
         _buildControlCenter.Initialize(startBase);
     }
 }
