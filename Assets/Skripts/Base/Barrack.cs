@@ -16,7 +16,7 @@ public class Barrack : MonoBehaviour, IUnitAddable
 
     public int UnitsCount => _units.Count;
     public int FreeUnitsCount => _freeUnits.Count;
-    public bool IsReadyToBuild => UnitsCount > _minUnitCount;
+    public bool IsUnitBuilderReady => UnitsCount > _minUnitCount;
 
     private void OnEnable()
     {

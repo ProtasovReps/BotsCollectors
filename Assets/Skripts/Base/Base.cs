@@ -49,7 +49,7 @@ public class Base : MonoBehaviour, IFlagSettable
         if (_barrack.FreeUnitsCount == 0)
             return;
 
-        if (_ifNewbaseBought && _barrack.IsReadyToBuild)
+        if (_ifNewbaseBought && _barrack.IsUnitBuilderReady)
             SetTargetFlag();
         else
             SetTargetResource();
@@ -79,7 +79,7 @@ public class Base : MonoBehaviour, IFlagSettable
     private void OnResourceAmountChanged()
     {
         int targetPrice;
-        bool isBaseTarget = _isFlagged && _barrack.IsReadyToBuild;
+        bool isBaseTarget = _isFlagged && _barrack.IsUnitBuilderReady;
 
         if (isBaseTarget)
             targetPrice = _prices.NewBasePrice;
