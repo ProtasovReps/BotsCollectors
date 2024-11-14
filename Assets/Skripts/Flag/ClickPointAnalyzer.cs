@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class FlagPointScanner : MonoBehaviour
+public class ClickPointAnalyzer : MonoBehaviour
 {
     [SerializeField] private LayerMask _layersToSearch;
     [SerializeField] private float _maxDistance;
@@ -34,7 +34,6 @@ public class FlagPointScanner : MonoBehaviour
         _mouseReader = mouseReader;
 
         _mouseReader.Enable();
-        _mouseReader.Clicked += OnClick;
     }
 
     private void OnClick(Vector2 mousePosition)

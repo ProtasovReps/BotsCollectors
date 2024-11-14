@@ -37,7 +37,7 @@ public class BuildControlCenter : MonoBehaviour
     {
         _bases = new List<Base>();
 
-        startBase.UnitBuilderSent += OnUnitBuilderSent;
+        OnBaseBuilt(startBase);
     }
 
     private void OnUnitBuilderSent(Unit unit)

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FlagSetter : MonoBehaviour
 {
-    [SerializeField] private FlagPointScanner _scanner;
+    [SerializeField] private ClickPointAnalyzer _scanner;
     [SerializeField] private FlagSpawner _spawner;
     [SerializeField] private BaseBuilder _builder;
 

@@ -10,7 +10,7 @@ public class FlagSpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_freeFlags != null)
+        if (_flags != null)
         {
             foreach (Flag flag in _freeFlags)
             {
@@ -21,7 +21,7 @@ public class FlagSpawner : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_freeFlags != null)
+        if (_flags != null)
         {
             foreach (Flag flag in _freeFlags)
             {
